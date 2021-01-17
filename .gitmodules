@@ -1,0 +1,3 @@
+[submodule "maplibre-gl-native"]
+	path = maplibre-gl-native
+	url = git@github.com:maptiler/maplibre-gl-native.git

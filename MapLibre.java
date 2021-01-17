@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 public class MapLibre {
 
     static {
-        System.loadLibrary("MapLibre");
+        System.loadLibrary("maplibre");
     }
 
     public native byte[] render(int height, int width, double pixelRatio, double latitude, double longitude, double zoom);

@@ -5,13 +5,13 @@ project(maplibre)
 set(CMAKE_CXX_STANDARD 14)
 
 find_package(JNI REQUIRED)
+find_package(Java REQUIRED)
+include(UseJava)
 
 include_directories(${JNI_INCLUDE_DIRS})
 
-add_library(maplibre SHARED MapLibre.h MapLibre.cpp)
-
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/maplibre-gl-native EXCLUDE_FROM_ALL)
 
-target_link_libraries(maplibre PRIVATE mbgl-core mbgl-compiler-options)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/native)
 
-install(TARGETS maplibre DESTINATION .)
+add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.dylib OUTPUT_NAME maplibre)

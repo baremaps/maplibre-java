@@ -1,5 +1,5 @@
 
-#include "MapLibre.h"
+#include "com_baremaps_maplibre_MapLibre.h"
 #include <mbgl/gfx/backend.hpp>
 #include <mbgl/gfx/headless_frontend.hpp>
 #include <mbgl/map/map.hpp>
@@ -19,7 +19,7 @@
 
 using namespace mbgl;
 
-JNIEXPORT jbyteArray JNICALL Java_MapLibre_render
+JNIEXPORT jbyteArray JNICALL Java_com_baremaps_maplibre_MapLibre_render
         (JNIEnv *env, jobject, jint height, jint width, jdouble pixelRation, jdouble lat, jdouble lon, jdouble zoom) {
     util::RunLoop loop;
 

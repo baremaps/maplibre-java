@@ -4,6 +4,7 @@ project(maplibre)
 
 set(CMAKE_CXX_STANDARD 14)
 
+find_package(CURL REQUIRED)
 find_package(JNI REQUIRED)
 find_package(Java REQUIRED)
 include(UseJava)

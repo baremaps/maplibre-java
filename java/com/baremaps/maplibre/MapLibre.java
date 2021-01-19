@@ -12,22 +12,16 @@ import java.nio.file.StandardCopyOption;
 public class MapLibre {
 
     private static String OS = System.getProperty("os.name").toLowerCase();
-    public static boolean IS_WINDOWS = OS.contains("win");
-    public static boolean IS_MAC = OS.contains("mac");
-    public static boolean IS_UNIX = OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
+    public static boolean LINUX = OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
+    public static boolean MACOS = OS.contains("mac");
 
     static {
-        loadLibrary("maplibre-native");
-    }
-
-    public static void loadLibrary(String libraryName) {
+        String libraryName = "maplibre-native";
         String libraryFile;
-        if (IS_UNIX) {
-            libraryFile = String.format("%s.so", libraryName);
-        } else if (IS_MAC) {
+        if (LINUX) {
+            libraryFile = String.format("lib%s.so", libraryName);
+        } else if (MACOS) {
             libraryFile = String.format("lib%s.dylib", libraryName);
-        } else if (IS_WINDOWS) {
-            libraryFile = String.format("%s.dll", libraryName);
         } else {
             throw new RuntimeException("Unsupported operating system");
         }

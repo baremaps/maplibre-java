@@ -31,18 +31,3 @@ jobs:
         run: cmake .
       - name: Build project
         run: cmake --build .
-  build-windows:
-    name: Build Project (Windows)
-    runs-on: windows-latest
-    steps:
-      - name: Git long paths
-        run: git config --system core.longpaths true
-      - name: Checkout
-        uses: actions/checkout@v2.0.0
-      - name: Checkout submodules
-        run:  git submodule update --init --recursive
-      - name: Configure project
-        run: cmake .
-      - name: Build project
-        run: cmake --build .
-

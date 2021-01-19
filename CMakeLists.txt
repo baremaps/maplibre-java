@@ -22,9 +22,3 @@ if(APPLE)
     add_jar(maplibre-macos java/com/baremaps/maplibre/MapLibre.java native/libmaplibre-native.dylib)
     add_dependencies(maplibre-macos maplibre-native)
 endif()
-    
-if (WIN32)
-    add_jar(maplibre-windows java/com/baremaps/maplibre/MapLibre.java native/maplibre-native.dll)
-    add_dependencies(maplibre-windows maplibre-native)
-endif()
-

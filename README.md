@@ -1,6 +1,6 @@
 # MapLibre Java
 
-This proof of concept renders maps from Java with maplibre-gl-native.
+This proof of concept renders maps from Java with maplibre-gl-native. It builds on linux and macOS
 
 ```
 git submodule update --init --recursive

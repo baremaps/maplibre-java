@@ -19,8 +19,8 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(APPLE)
-    add_jar(maplibre-osx java/com/baremaps/maplibre/MapLibre.java native/libmaplibre-native.dylib)
-    add_dependencies(maplibre-osx maplibre-native)
+    add_jar(maplibre-macos java/com/baremaps/maplibre/MapLibre.java native/libmaplibre-native.dylib)
+    add_dependencies(maplibre-macos maplibre-native)
 endif()
     
 if (WIN32)

@@ -21,6 +21,8 @@ jobs:
     name: Build Project (MacOS)
     runs-on: macos-latest
     steps:
+      - name: Install dependencies
+        run: brew install cmake ccache glfw ninja pkgconfig qt
       - name: Checkout
         uses: actions/checkout@v2.0.0
       - name: Checkout submodules

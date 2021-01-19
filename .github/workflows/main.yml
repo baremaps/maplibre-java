@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   ubuntu-build:
+    name: Build Project (Linux)
     runs-on: ubuntu-latest
     steps:
     - name: Install dependencies
@@ -16,4 +17,16 @@ jobs:
       run: cmake .
     - name: Build project
       run: cmake --build .
-      
+  build-macos:
+    name: Build Project (MacOS)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Checkout submodules
+        run:  git submodule update --init --recursive
+      - name: Configure project
+        run: cmake .
+      - name: Build project
+        run: cmake --build .
+

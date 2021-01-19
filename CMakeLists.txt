@@ -13,15 +13,17 @@ include_directories(${JNI_INCLUDE_DIRS})
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/maplibre-gl-native EXCLUDE_FROM_ALL)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/native)
 
-if(EXISTS native/libmaplibrenative.dylib)
-    add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.dylib)
-endif()
 
-if(EXISTS native/libmaplibrenative.so)
+
+if(UNIX AND NOT APPLE)
     add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.so)
 endif()
+
+if(APPLE)
+    add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.dylib)
+endif()
     
-if(EXISTS native/maplibrenative.dll)
+if (WIN32)
     add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/maplibrenative.dll)
 endif()
 

@@ -18,4 +18,8 @@ jobs:
       run: cmake --build .
     - uses: actions/upload-artifact@v2
       with:
+        path: native/libmaplibre-native.so
+        name: libmaplibre-native.so
+    - uses: actions/upload-artifact@v2
+      with:
         path: maplibre-linux.jar

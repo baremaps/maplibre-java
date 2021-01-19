@@ -13,8 +13,6 @@ include_directories(${JNI_INCLUDE_DIRS})
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/maplibre-gl-native EXCLUDE_FROM_ALL)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/native)
 
-
-
 if(UNIX AND NOT APPLE)
     add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.so)
 endif()

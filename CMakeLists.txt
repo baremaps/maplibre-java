@@ -4,7 +4,6 @@ project(maplibre)
 
 set(CMAKE_CXX_STANDARD 14)
 
-find_package(CURL REQUIRED)
 find_package(JNI REQUIRED)
 find_package(Java REQUIRED)
 include(UseJava)
@@ -14,6 +13,16 @@ include_directories(${JNI_INCLUDE_DIRS})
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/maplibre-gl-native EXCLUDE_FROM_ALL)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/native)
 
-add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.dylib)
+if(EXISTS native/libmaplibrenative.dylib)
+    add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.dylib)
+endif()
+
+if(EXISTS native/libmaplibrenative.so)
+    add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/libmaplibrenative.so)
+endif()
+    
+if(EXISTS native/maplibrenative.dll)
+    add_jar(maplibre java/com/baremaps/maplibre/MapLibre.java native/maplibrenative.dll)
+endif()
 
 add_dependencies(maplibre maplibrenative)

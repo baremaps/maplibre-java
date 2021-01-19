@@ -17,7 +17,7 @@ public class MapLibre {
     public static boolean IS_UNIX = OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
 
     static {
-        loadLibrary("maplibrenative");
+        loadLibrary("maplibre-native");
     }
 
     public static void loadLibrary(String libraryName) {

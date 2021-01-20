@@ -19,30 +19,74 @@
 
 using namespace mbgl;
 
+// https://github.com/kildevaeld/mbglc/blob/master/src/mbglc.cpp
+// https://dhilst.github.io/2016/10/15/JNI-CPP.html
+
+struct maplibre
+{
+    std::unique_ptr<HeadlessFrontend> frontend;
+    std::unique_ptr<mbgl::Map> map;
+};
+
+JNIEXPORT jlong JNICALL Java_com_baremaps_maplibre_MapLibre_startRunLoop
+        (JNIEnv *, jclass) {
+    util::RunLoop *loop = new util::RunLoop();
+    return reinterpret_cast<jlong>(loop);
+}
+
+JNIEXPORT jlong JNICALL Java_com_baremaps_maplibre_MapLibre_createMapLibre
+        (JNIEnv *, jobject, jdouble width, jdouble height, jdouble pixelRatio) {
+    auto frontend = std::make_unique<HeadlessFrontend>(Size{static_cast<uint32_t>(width), static_cast<uint32_t>(height)}, pixelRatio);
+    auto map = std::make_unique<Map>(*frontend, MapObserver::nullObserver(), MapOptions().withSize(frontend->getSize()).withMapMode(MapMode::Static), ResourceOptions());
+    auto ml = new maplibre{std::move(frontend), std::move(map)};
+    return reinterpret_cast<jlong>(ml);
+}
+
+static maplibre *getMapLibre(JNIEnv *env, jobject self) {
+    jclass cls = env->GetObjectClass(self);
+    if (!cls)
+        env->FatalError("GetObjectClass failed");
+
+    jfieldID mapLibrePointerID = env->GetFieldID(cls, "mapLibrePointer", "J");
+    if (!mapLibrePointerID)
+        env->FatalError("GetFieldID failed");
+
+    jlong mapLibrePointer = env->GetLongField(self, mapLibrePointerID);
+    return reinterpret_cast<maplibre *>(mapLibrePointer);
+}
+
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_loadUrlStyle
+        (JNIEnv *env, jobject self, jstring url) {
+    maplibre* mapLibre = getMapLibre(env, self);
+    std::string urlStr(std::string(env->GetStringUTFChars(url, NULL)));
+    mapLibre->map->getStyle().loadURL(urlStr);
+}
+
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_setPosition
+        (JNIEnv *env, jobject self, jdouble latitude, jdouble longitude, jint zoom) {
+    maplibre* mapLibre = getMapLibre(env, self);
+    LatLng center{latitude, longitude};
+    mapLibre->map->jumpTo(CameraOptions().withCenter(center).withZoom(zoom));
+}
+
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_setCenter
+        (JNIEnv *env, jobject self, jdouble latitude, jdouble longitude) {
+    maplibre* mapLibre = getMapLibre(env, self);
+    LatLng center{latitude, longitude};
+    mapLibre->map->jumpTo(CameraOptions().withCenter(center));
+}
+
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_setZoom
+        (JNIEnv *env, jobject self, jint zoom) {
+    maplibre* mapLibre = getMapLibre(env, self);
+    mapLibre->map->jumpTo(CameraOptions().withZoom(zoom));
+}
+
 JNIEXPORT jbyteArray JNICALL Java_com_baremaps_maplibre_MapLibre_render
-        (JNIEnv *env, jobject, jint height, jint width, jdouble pixelRation, jdouble lat, jdouble lon, jdouble zoom) {
-    util::RunLoop loop;
+        (JNIEnv *env, jobject self) {
+    maplibre* mapLibre = getMapLibre(env, self);
 
-    HeadlessFrontend frontend(Size{static_cast<uint32_t>(width), static_cast<uint32_t>(height)}, pixelRation);
-    MapObserver mapObserver = MapObserver::nullObserver();
-
-    MapOptions mapOptions;
-    mapOptions.withSize(frontend.getSize());
-    mapOptions.withMapMode(MapMode::Static);
-
-    ResourceOptions resourceOptions;
-    //resourceOptions.withAccessToken("pk.eyJ1IjoiYmNoYXB1aXMiLCJhIjoiY2loNmUycGw0MDAyMnZybTExYzlrcHBoeSJ9.LuJcf0_spqjJ4NkXrYPf4A");
-    //resourceOptions.withCachePath("");
-    //resourceOptions.withAssetPath("");
-
-    Map map(frontend, mapObserver, mapOptions, resourceOptions);
-
-    LatLng center{lat, lon};
-    map.jumpTo(CameraOptions().withCenter(center).withZoom(zoom));
-
-    map.getStyle().loadURL("https://tiles.baremaps.com/style.json");
-
-    auto result = frontend.render(map);
+    auto result = mapLibre->frontend->render(*(mapLibre->map));
     auto buf = encodePNG(result.image);
 
     jbyte *png = (jbyte *) std::malloc(sizeof(jbyte) * buf.size());

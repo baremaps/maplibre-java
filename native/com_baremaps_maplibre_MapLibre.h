@@ -9,11 +9,59 @@ extern "C" {
 #endif
 /*
  * Class:     com_baremaps_maplibre_MapLibre
+ * Method:    startRunLoop
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_baremaps_maplibre_MapLibre_startRunLoop
+        (JNIEnv *, jclass);
+
+/*
+ * Class:     com_baremaps_maplibre_MapLibre
+ * Method:    createMapLibre
+ * Signature: (DDD)J
+ */
+JNIEXPORT jlong JNICALL Java_com_baremaps_maplibre_MapLibre_createMapLibre
+        (JNIEnv *, jobject, jdouble, jdouble, jdouble);
+
+/*
+ * Class:     com_baremaps_maplibre_MapLibre
+ * Method:    loadUrlStyle
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_loadUrlStyle
+        (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_baremaps_maplibre_MapLibre
+ * Method:    setPosition
+ * Signature: (DDI)V
+ */
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_setPosition
+        (JNIEnv *, jobject, jdouble, jdouble, jint);
+
+/*
+ * Class:     com_baremaps_maplibre_MapLibre
+ * Method:    setCenter
+ * Signature: (DD)V
+ */
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_setCenter
+        (JNIEnv *, jobject, jdouble, jdouble);
+
+/*
+ * Class:     com_baremaps_maplibre_MapLibre
+ * Method:    setZoom
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_baremaps_maplibre_MapLibre_setZoom
+        (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_baremaps_maplibre_MapLibre
  * Method:    render
- * Signature: (IIDDDD)[B
+ * Signature: ()[B
  */
 JNIEXPORT jbyteArray JNICALL Java_com_baremaps_maplibre_MapLibre_render
-        (JNIEnv *, jobject, jint, jint, jdouble, jdouble, jdouble, jdouble);
+        (JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }

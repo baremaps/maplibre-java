@@ -70,8 +70,7 @@ public class MapLibre {
         map.loadUrlStyle("https://tiles.baremaps.com/style.json");
         map.setPosition(46.6189, 6.5743, 14);
         byte[] buf = map.render();
-        System.out.println(buf.length);
-        Files.write(Paths.get("java.png"), buf);
+        Files.write(Paths.get("map.png"), buf);
     }
 
 }

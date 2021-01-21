@@ -53,7 +53,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Baremaps ${{ github.ref }}
+          release_name: MapLibre Java (${{ github.sha }})
           draft: true
           prerelease: false
       - name: Download libmaplibre-native.so
@@ -83,5 +83,20 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: native/libmaplibre-native.dylib
           asset_name: libmaplibre-native.dylib
+          asset_content_type: application/octet-stream
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Create jar file
+        run: mvn -B package --file pom.xml
+      - name: Release maplibre-java.jar
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/maplibre-java.jar
+          asset_name: maplibre-java.jar
           asset_content_type: application/octet-stream
 

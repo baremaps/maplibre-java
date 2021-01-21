@@ -48,6 +48,8 @@ jobs:
     needs: [ubuntu-build, macos-build]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

@@ -1,6 +1,6 @@
 
 #include "com_baremaps_maplibre_MapLibre.h"
-#include <mbgl/gfx/headless_backend.hpp>
+#include <mbgl/gfx/backend.hpp>
 #include <mbgl/gfx/headless_frontend.hpp>
 #include <mbgl/map/map.hpp>
 #include <mbgl/map/map_options.hpp>

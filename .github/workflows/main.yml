@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Install dependencies
-      run: sudo apt-get install curl libuv1 libuv1-dev libglfw3 libglfw3-dev zlib1g-dev automake libtool xutils-dev make cmake pkg-config python-pip libcurl4-openssl-dev libpng-dev libsqlite3-dev libllvm3.9 libxi-dev libglu1-mesa-dev x11proto-randr-dev x11proto-xext-dev libxrandr-dev x11proto-xf86vidmode-dev libxxf86vm-dev libxcursor-dev libxinerama-dev
+      run: sudo apt-get install -y build-essential libgl-dev cmake libcurl4-gnutls-dev libjpeg-dev libpng-dev zlib1g-dev pkg-config libglfw3-dev libuv1-dev llvm clang libicu-dev
     - name: Checkout
       uses: actions/checkout@v2.0.0
     - name: Checkout submodules
       run:  git submodule update --init --recursive
     - name: Configure project
-      run: cmake .
+      run: cmake -DCMAKE_BUILD_TYPE=Release .
     - name: Build project
-      run: cmake --build .
+      run: cmake --build . --config Release
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
@@ -35,9 +35,9 @@ jobs:
       - name: Checkout submodules
         run:  git submodule update --init --recursive
       - name: Configure project
-        run: cmake .
+        run: cmake -DCMAKE_BUILD_TYPE=Release .
       - name: Build project
-        run: cmake --build .
+        run: cmake --build . --config Release
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:

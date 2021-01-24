@@ -9,7 +9,9 @@ jobs:
     name: Build binaries (Linux)
     runs-on: ubuntu-18.04
     steps:
-    - name: Install dependencies
+    - name: Update package repositories
+      run: sudo apt-get update
+    - name: Install packages
       run: sudo apt-get install -y build-essential libgl-dev cmake libcurl4-gnutls-dev libjpeg-dev libpng-dev zlib1g-dev pkg-config libglfw3-dev libuv1-dev llvm clang libicu-dev
     - name: Checkout
       uses: actions/checkout@v2.0.0

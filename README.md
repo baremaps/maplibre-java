@@ -40,7 +40,7 @@ The following packages are required on MacOS:
 brew install cmake ccache glfw ninja pkgconfig qt
 ```
 
-## Install
+## Building from source
 
 The following commands install and build the sources of maplibre-java:
 
@@ -56,6 +56,8 @@ mvn clean install
 The file `target/maplibre-java.jar` should have been created upon  successful completion.
 
 ## Execute
+
+
 
 The following command should render a map in a file named `map.png` in the current directory.
 

@@ -1,0 +1,5 @@
+name: "MapLibre Compiler"
+description: "Compile MapLibre"
+runs:
+  using: "docker"
+  image: "Dockerfile"

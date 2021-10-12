@@ -5,7 +5,7 @@
 #include <mbgl/map/map.hpp>
 #include <mbgl/map/map_options.hpp>
 #include <mbgl/style/style.hpp>
-#include <mbgl/util/default_styles.hpp>
+#include <mbgl/util/default_style.hpp>
 #include <mbgl/util/image.hpp>
 #include <mbgl/layermanager/layer_manager.hpp>
 #include <mbgl/util/run_loop.hpp>
